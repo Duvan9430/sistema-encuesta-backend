@@ -29,20 +29,6 @@ public class UsuarioServicioImpl implements UsuarioServicios {
         usuarioLocal = usuarioRepository.save(usuario);
         return usuarioLocal;
     }
-
-
-    public Usuario cambiarEstadoUsuario(Usuario usuario) throws Exception {
-        Usuario usuarioLocal = usuarioRepository.findByUsername(usuario.getUsername());
-        if(usuarioLocal == null){
-            throw new Exception("El usuario no existe");
-        }
-        usuario.setBloqueo(usuarioLocal.getBloqueo() + 1);
-         return usuarioRepository.save(usuario);
-
-    }
-
-
-
     @Override
     public Usuario obtenerUsuario(String username) {
         return usuarioRepository.findByUsername(username);

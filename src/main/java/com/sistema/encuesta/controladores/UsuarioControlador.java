@@ -21,20 +21,7 @@ public class UsuarioControlador {
 
     private Map<String, Object> response = new HashMap<String, Object>();
 
-    @PutMapping("/estado")
-    public ResponseEntity<?> cambiarEstadoUsuario(@RequestBody Usuario Usuario) throws Exception{
-        try {
-            System.out.println("xxxxxxxxxxxxxxxxxxxxxxxx");
-            response.put("message", "success");
-            response.put("status", true);
-            response.put("data", usuarioServicios.cambiarEstadoUsuario(Usuario));
-            return ResponseEntity.ok(response);
-        } catch (Exception ex) {
-            response.put("message", ex.getMessage());
-            response.put("status", false);
-            return ResponseEntity.status(HttpStatus.INTERNAL_SERVER_ERROR).body(response);
-        }
-    }
+
     @PostMapping("/")
     public ResponseEntity<?> guardarUsuario(@RequestBody Usuario usuario) throws Exception{
         try {
