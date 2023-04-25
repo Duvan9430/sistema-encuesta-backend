@@ -16,7 +16,7 @@ public class FormularioComentarios implements Serializable  {
     @Column(name = "numero_documento",nullable = false)
     private Integer numeroDocumento;
     @Column(name = "email",nullable = false)
-    private String password;
+    private String email;
     @Column(name = "comentarios",nullable = false,columnDefinition = "TEXT")
     private String comentarios;
     @ManyToOne(fetch = FetchType.EAGER)

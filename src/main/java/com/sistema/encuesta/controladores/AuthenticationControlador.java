@@ -6,6 +6,7 @@ import com.sistema.encuesta.entidades.JwtResponse;
 import com.sistema.encuesta.entidades.Usuario;
 import com.sistema.encuesta.exepciones.UsuarioNotFoundException;
 import com.sistema.encuesta.servicios.Impl.UserDetailsServiceImpl;
+import com.sistema.encuesta.servicios.Impl.UsuarioServicioImpl;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.authentication.AuthenticationManager;
@@ -24,6 +25,8 @@ public class AuthenticationControlador {
     private AuthenticationManager authenticationManager;
 
     @Autowired
+    private UsuarioServicioImpl usuarioServicio;
+    @Autowired
     private UserDetailsServiceImpl userDetailsService;
 
     @Autowired
@@ -31,7 +34,14 @@ public class AuthenticationControlador {
 
     @PostMapping("/generate-token")
     public ResponseEntity<?> generarToken(@RequestBody JwtRequest jwtRequest) throws Exception {
+
         try{
+            Usuario logeado = usuarioServicio.obtenerUsuario(jwtRequest.getUsername());
+            if(logeado != null){
+                if (logeado.getBloqueo() >= 3 ){
+                    throw new Exception("El usuario actualemente se encuentra bloqueado " );
+                }
+            }
             autenticar(jwtRequest.getUsername(),jwtRequest.getPassword());
         }catch (UsuarioNotFoundException exception){
             exception.printStackTrace();
